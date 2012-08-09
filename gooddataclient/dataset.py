@@ -106,7 +106,7 @@ class Dataset(object):
 
     def get_sli_manifest(self):
         '''Create JSON manifest from columns in schema.
-        
+
         See populateColumnsFromSchema in AbstractConnector.java
         '''
         parts = []
@@ -217,7 +217,7 @@ class DateDimension(object):
 
     def get_maql(self, name=None, include_time=False):
         '''Get MAQL for date dimension.
-        
+
         See generateMaqlCreate in DateDimensionConnect.java
         '''
         if not name:

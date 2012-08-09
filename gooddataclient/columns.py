@@ -7,7 +7,7 @@ class Column(object):
     referenceKey = False
 
     def __init__(self, title, folder=None, reference=None,
-                 schemaReference=None, dataType=None, datetime=False, format=None):
+                 schemaReference=None, dataType=None, datetime=False, format=None, mode='FULL'):
         self.title = to_title(title)
         self.folder = to_identifier(folder)
         self.folder_title = to_title(folder)
@@ -16,6 +16,7 @@ class Column(object):
         self.dataType = dataType
         self.datetime = datetime
         self.format = format
+        self.mode = mode
 
     def get_schema_values(self):
         values = []
@@ -189,14 +190,14 @@ class Label(Column):
 def get_date_dt_column(column, schema_name):
     name = '%s_dt' % column.name
     populates = 'dt.%s.%s' % (to_identifier(schema_name), column.name)
-    return {'populates': [populates], 'columnName': name, 'mode': 'FULL'}
+    return {'populates': [populates], 'columnName': name, 'mode': column.mode}
 
 def get_time_tm_column(column, schema_name):
     name = '%s_tm' % column.name
     populates = 'tm.dt.%s.%s' % (to_identifier(schema_name), column.name)
-    return {'populates': [populates], 'columnName': name, 'mode': 'FULL'}
+    return {'populates': [populates], 'columnName': name, 'mode': column.mode}
 
 def get_tm_time_id_column(column, schema_name):
     name = 'tm_%s_id' % column.name
     populates = 'label.time.second.of.day.%s' % column.schemaReference
-    return {'populates': [populates], 'columnName': name, 'mode': 'FULL', 'referenceKey': 1}
+    return {'populates': [populates], 'columnName': name, 'mode': column.mode, 'referenceKey': 1}
